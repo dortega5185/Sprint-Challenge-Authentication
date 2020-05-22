@@ -14,8 +14,7 @@ router.get('/', (req, res) => {
     .catch((err) => res.send(err))
 })
 
-// only accounts with the admin role can create users
-router.post('/', checkRoles(['admin']), (req, res) => {
+router.post('/', (req, res) => {
   const user = req.body
 
   if (isValid(user)) {
@@ -30,17 +29,5 @@ router.post('/', checkRoles(['admin']), (req, res) => {
     res.status(400).json({ message: 'please provide all user information' })
   }
 })
-
-function checkRoles(roles) {
-  return function (req, res, next) {
-    const role = req.jwt.role
-
-    if (req.jwt && req.jwt.role && roles.includes(role)) {
-      next()
-    } else {
-      res.status(403).json({ you: 'have no power here' })
-    }
-  }
-}
 
 module.exports = router
