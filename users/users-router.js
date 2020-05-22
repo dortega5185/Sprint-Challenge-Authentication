@@ -1,12 +1,10 @@
 const router = require('express').Router()
 
 const Users = require('./users-model.js')
-const restricted = require('../auth/authenticate-middleware.js')
+const authenticate = require('../auth/authenticate-middleware.js')
 const { isValid } = require('./users-service.js')
 
-router.use(restricted)
-
-router.get('/', (req, res) => {
+router.get('/', authenticate, (req, res) => {
   Users.find()
     .then((users) => {
       res.status(200).json({ users, jwt: req.jwt })
@@ -14,7 +12,7 @@ router.get('/', (req, res) => {
     .catch((err) => res.send(err))
 })
 
-router.post('/', (req, res) => {
+router.post('/', authenticate, (req, res) => {
   const user = req.body
 
   if (isValid(user)) {

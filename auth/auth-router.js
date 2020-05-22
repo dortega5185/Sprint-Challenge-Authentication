@@ -64,7 +64,6 @@ function createToken(user) {
   const payload = {
     sub: user.id,
     username: user.username,
-    role: user.name,
   }
 
   const options = {

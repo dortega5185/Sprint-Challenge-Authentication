@@ -4,16 +4,11 @@
   "description": "Authentication Sprint Challenge",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env FOOBAR=testing jest --watch --verbose --coverage --runInBand",
-    "server": "nodemon index.js",
-    "start": "node server.js"
+    "test": "cross-env DB_ENV=testing jest --watch --verbose",
+    "server": "nodemon index.js"
   },
   "jest": {
-    "collectCoverageFrom": [
-      "**/*.js",
-      "!**/node_modules/**",
-      "!**/coverage/**"
-    ]
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",
