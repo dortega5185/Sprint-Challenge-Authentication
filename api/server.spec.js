@@ -80,3 +80,22 @@ test('post /api/auth/login to fail', async () => {
   expect(res.status).toBe(401)
   expect(res.body).toMatchObject({ message: 'Invalid credentials' })
 })
+
+describe('get jokes', () => {
+  it('get all jokes as long as you are logged in', async () => {
+    return request(server)
+      .get('/api/jokes')
+      .set(
+        'Authorization',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoibXVmZmluIiwiaWF0IjoxNTkwMTg0MDY0LCJleHAiOjE1OTAyNzA0NjR9.5vtCjtw2iyzFDFrZCFeXN0ye24yxRz_qfwzW7duWY4o'
+      )
+      .expect(200)
+  })
+})
+
+describe('fail to get jokes without auth', () => {
+  it('get /api/jokes to fail', async () => {
+    const res = await request(server).get('/api/jokes')
+    expect(res.status).toBe(401)
+  })
+})
